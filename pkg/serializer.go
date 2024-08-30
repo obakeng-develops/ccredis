@@ -68,7 +68,6 @@ func SerializeArrays(s interface{}) string {
 
 		return finalArray
 	default:
-		fmt.Println("Unsupported type")
 		return ""
 	}
 }
