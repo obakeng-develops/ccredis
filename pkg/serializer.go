@@ -15,15 +15,15 @@ const (
 )
 
 func SerializeSimpleStrings(value string) string {
-	return SIMPLE_STRING_PREFIX + value + CRLF
+	return SIMPLE_STRING_PREFIX + value + CRLF // +OK\r\n
 }
 
 func SerializeErrors(value string) string {
-	return ERROR_PREFIX + value + CRLF
+	return ERROR_PREFIX + value + CRLF // -Nothing\r\n
 }
 
 func SerializeIntegers(value int) string {
-	return INT_PREFIX + strconv.Itoa(value) + CRLF
+	return INT_PREFIX + strconv.Itoa(value) + CRLF // :10\r\n
 }
 
 func SerializeBulkStrings(value string) string {
@@ -32,7 +32,7 @@ func SerializeBulkStrings(value string) string {
 		return emptyBulkString
 	}
 
-	return BULK_STRING_PREFIX + strconv.Itoa(len(value)) + CRLF + value + CRLF
+	return BULK_STRING_PREFIX + strconv.Itoa(len(value)) + CRLF + value + CRLF //$1\r\nhello\r\n
 }
 
 func SerializeArrays(s interface{}) string {
