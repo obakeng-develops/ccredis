@@ -1,27 +1,74 @@
 package pkg
 
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+)
+
+const (
+	CRLF                 = "\r\n"
+	SIMPLE_STRING_PREFIX = "+"
+	ERROR_PREFIX         = "-"
+	INT_PREFIX           = ":"
+	BULK_STRING_PREFIX   = "$"
+	ARRAY_PREFIX         = "*"
+)
 
 func SerializeSimpleStrings(value string) string {
-	return "+" + value + "\r\n"
+	return SIMPLE_STRING_PREFIX + value + CRLF
 }
 
 func SerializeErrors(value string) string {
-	return "-" + value + "\r\n"
+	return ERROR_PREFIX + value + CRLF
 }
 
 func SerializeIntegers(value int) string {
-	return ":" + strconv.Itoa(value) + "\r\n"
+	return INT_PREFIX + strconv.Itoa(value) + CRLF
 }
 
 func SerializeBulkStrings(value string) string {
 	if value == "" {
-		return "$-1\r\n"
+		emptyBulkString := BULK_STRING_PREFIX + "0" + CRLF + CRLF
+		return emptyBulkString
 	}
 
-	return "$" + strconv.Itoa(len(value)) + "\r\n" + value + "\r\n"
+	return BULK_STRING_PREFIX + strconv.Itoa(len(value)) + CRLF + value + CRLF
 }
 
-func SerializeArrays(values []string) string {
-	return "nil"
+func SerializeArrays(s interface{}) string {
+	emptyArray := ARRAY_PREFIX + "0" + CRLF
+
+	switch values := s.(type) {
+	case []string:
+		arrayLength := len(values)
+		finalArray := ARRAY_PREFIX + strconv.Itoa(arrayLength) + CRLF
+
+		if arrayLength == 0 {
+			return emptyArray
+		}
+
+		for _, value := range values {
+			str := fmt.Sprintf("%v", value)
+			finalArray += BULK_STRING_PREFIX + strconv.Itoa(len(str)) + CRLF + str + CRLF
+		}
+
+		return finalArray
+	case []int:
+		arrayLength := len(values)
+		finalArray := ARRAY_PREFIX + strconv.Itoa(arrayLength) + CRLF
+
+		if arrayLength == 0 {
+			return emptyArray
+		}
+
+		for _, value := range values {
+			str := fmt.Sprintf("%v", value)
+			finalArray += INT_PREFIX + str + CRLF
+		}
+
+		return finalArray
+	default:
+		fmt.Println("Unsupported type")
+		return ""
+	}
 }
