@@ -24,18 +24,18 @@ func TestSimpleStrings(t *testing.T) {
 		},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.description, func(t *testing.T) {
-			result := pkg.SerializeSimpleStrings(tt.input)
+	for _, tc := range tests {
+		t.Run(tc.description, func(t *testing.T) {
+			result := pkg.SerializeSimpleStrings(tc.input)
 
-			if result != tt.expected {
-				t.Errorf("got %s, want %s", result, tt.expected)
+			if result != tc.expected {
+				t.Errorf("got %s, want %s", result, tc.expected)
 			}
 		})
 	}
 }
 
-func TestErrors(t *testing.T) {
+func TestIntegers(t *testing.T) {
 	tests := []struct {
 		description string
 		input       int
@@ -53,12 +53,41 @@ func TestErrors(t *testing.T) {
 		},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.description, func(t *testing.T) {
-			result := pkg.SerializeIntegers(tt.input)
+	for _, tc := range tests {
+		t.Run(tc.description, func(t *testing.T) {
+			result := pkg.SerializeIntegers(tc.input)
 
-			if result != tt.expected {
-				t.Errorf("got %s, want %s", result, tt.expected)
+			if result != tc.expected {
+				t.Errorf("got %s, want %s", result, tc.expected)
+			}
+		})
+	}
+}
+
+func TestErrors(t *testing.T) {
+	tests := []struct {
+		description string
+		input       string
+		expected    string
+	}{
+		{
+			description: "returns unknown command",
+			input:       "unknown command",
+			expected:    "-unknown command\r\n",
+		},
+		{
+			description: "returns operation against wrong type",
+			input:       "operation against wrong type",
+			expected:    "-operation against wrong type\r\n",
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.description, func(t *testing.T) {
+			result := pkg.SerializeErrors(tc.input)
+
+			if result != tc.expected {
+				t.Errorf("got %s, want %s", result, tc.expected)
 			}
 		})
 	}
@@ -82,12 +111,12 @@ func TestBulkStrings(t *testing.T) {
 		},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.description, func(t *testing.T) {
-			result := pkg.SerializeBulkStrings(tt.input)
+	for _, tc := range tests {
+		t.Run(tc.description, func(t *testing.T) {
+			result := pkg.SerializeBulkStrings(tc.input)
 
-			if result != tt.expected {
-				t.Errorf("got %s, want %s", result, tt.expected)
+			if result != tc.expected {
+				t.Errorf("got %s, want %s", result, tc.expected)
 			}
 		})
 	}
@@ -121,12 +150,12 @@ func TestArrays(t *testing.T) {
 		},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.description, func(t *testing.T) {
-			result := pkg.SerializeArrays(tt.input)
+	for _, tc := range tests {
+		t.Run(tc.description, func(t *testing.T) {
+			result := pkg.SerializeArrays(tc.input)
 
-			if result != tt.expected {
-				t.Errorf("got %s, want %s", result, tt.expected)
+			if result != tc.expected {
+				t.Errorf("got %s, want %s", result, tc.expected)
 			}
 		})
 	}
