@@ -13,14 +13,19 @@ func TestSimpleStrings(t *testing.T) {
 		expected    string
 	}{
 		{
-			description: "returns hello world",
-			input:       "hello world",
-			expected:    "+hello world\r\n",
+			description: "returns SUCCESS",
+			input:       "SUCCESS",
+			expected:    "+SUCCESS\r\n",
 		},
 		{
 			description: "returns OK",
 			input:       "OK",
 			expected:    "+OK\r\n",
+		},
+		{
+			description: "returns PONG",
+			input:       "PONG",
+			expected:    "+PONG\r\n",
 		},
 	}
 
