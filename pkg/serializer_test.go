@@ -149,6 +149,11 @@ func TestArrays(t *testing.T) {
 			expected:    "*3\r\n:1\r\n:2\r\n:3\r\n",
 		},
 		{
+			description: "returns mixed element array",
+			input:       []interface{}{1, "2", 3},
+			expected:    "*5\r\n:1\r\n:2\r\n:3\r\n:4\r\n$5\r\nhello\r\n",
+		},
+		{
 			description: "returns unsupported type",
 			input:       map[string]int{"a": 1},
 			expected:    "",
