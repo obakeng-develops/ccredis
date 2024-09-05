@@ -67,6 +67,26 @@ func SerializeArrays(s interface{}) string {
 		}
 
 		return finalArray
+	case []interface{}:
+		arrayLength := len(values)
+		finalArray := ARRAY_PREFIX + strconv.Itoa(arrayLength) + CRLF
+
+		if arrayLength == 0 {
+			return emptyArray
+		}
+
+		for _, value := range values {
+			switch v := value.(type) {
+			case int:
+				finalArray += INT_PREFIX + strconv.Itoa(v) + CRLF
+			case string:
+				finalArray += BULK_STRING_PREFIX + strconv.Itoa(len(v)) + CRLF + v + CRLF
+			default:
+				return ""
+			}
+		}
+
+		return finalArray
 	default:
 		return ""
 	}
