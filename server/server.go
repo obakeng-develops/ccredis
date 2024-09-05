@@ -8,13 +8,13 @@ import (
 func StartServer() {
 	ln, err := net.Listen("tcp", ":8080")
 	if err != nil {
-		slog.Error("Error occurred", "err", err)
+		slog.Error("An error occurred", "err", err)
 	}
 
 	for {
 		conn, err := ln.Accept()
 		if err != nil {
-			slog.Error("Could not accept connections", "err", err)
+			slog.Error("An error occurred", "err", err)
 		}
 
 		go handleConnection(conn)
