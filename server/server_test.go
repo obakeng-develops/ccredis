@@ -9,7 +9,10 @@ import (
 )
 
 func TestStartServer(t *testing.T) {
-	go server.StartServer()
+	server := &server.Server{}
+	newServer := server.NewServer("tcp", ":8080")
+
+	go newServer.StartServer()
 
 	time.Sleep(100 * time.Millisecond)
 
