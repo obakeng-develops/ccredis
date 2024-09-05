@@ -10,7 +10,7 @@ import (
 
 func TestStartServer(t *testing.T) {
 	server := &server.Server{}
-	newServer := server.NewServer("tcp", ":8080")
+	newServer := server.NewServer(":8080")
 
 	go newServer.StartServer()
 
