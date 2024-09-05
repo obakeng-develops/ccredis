@@ -5,8 +5,20 @@ import (
 	"net"
 )
 
-func StartServer() {
-	ln, err := net.Listen("tcp", ":8080")
+type Server struct {
+	network string
+	address string
+}
+
+func (s *Server) NewServer(network, address string) *Server {
+	return &Server{
+		network: network,
+		address: address,
+	}
+}
+
+func (s *Server) StartServer() {
+	ln, err := net.Listen(s.network, s.address)
 	if err != nil {
 		slog.Error("An error occurred", "err", err)
 	}
