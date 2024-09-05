@@ -10,13 +10,13 @@ import (
 
 func TestStartServer(t *testing.T) {
 	server := &server.Server{}
-	newServer := server.NewServer(":8080")
+	newServer := server.NewServer(":6379")
 
 	go newServer.StartServer()
 
 	time.Sleep(100 * time.Millisecond)
 
-	conn, err := net.Dial("tcp", "localhost:8080")
+	conn, err := net.Dial("tcp", "localhost:6379")
 	if err != nil {
 		t.Fatalf("Failed to connect to server: %v", err)
 	}
